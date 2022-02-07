@@ -8,14 +8,12 @@ const Index = () => {
   const [state, setstate] = useState<IDataList[]>([]);
   const [List, setList] = useState<IDataList[]>();
   const [name, setName] = useState<string>("Shipping");
-  const [question, setQuestion] = useState<IDataQuestions[]>([]);
-
   const getQuestion = (name: string) => {
     setName(name);
     setstate((prev) =>
       data.filter((element: IDataList) => element.Name === name)
     );
-    setQuestion(state[0].Questions)
+    console.log(11);
   };
   useEffect(() => {
     setList(
@@ -23,28 +21,22 @@ const Index = () => {
         a.Priority > b.Priority ? 1 : b.Priority > a.Priority ? -1 : 0
       )
     );
-    setstate((prev) =>
-      data.filter((element: IDataList) => element.Name === name)
-    );
-    setQuestion(state[0].Questions)
     getQuestion("Shipping");
-  }, []);
+  }, [List]);
   return (
     <Flex>
-      {List?.length &&
-        List.map((element: IDataList, index: number) => (
-          <div key={index}>
-            <LeftData>
+      <LeftData>
+        {List?.length &&
+          List.map((element: IDataList, index: number) => (
+            <div key={index}>
               <DataName onClick={() => getQuestion(element.Name)}>
                 {element.Name}
               </DataName>
-
-              {console.log(question)}
-            </LeftData>
-          </div>
-        ))}
+            </div>
+          ))}
+      </LeftData>
       <RightData>
-        <ListQuestions stateList={question} Name={name} />
+        <ListQuestions stateList={state} Name={name} />
       </RightData>
     </Flex>
   );

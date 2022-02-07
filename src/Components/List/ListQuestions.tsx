@@ -1,32 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { IDataList, IDataQuestions } from "../../@type/type";
 import { Wrapper } from "../Container/style";
-import { DivMenu, Up } from "./style";
+import { DivMenu, Up, Dowun } from "./style";
 interface Iprops {
-  stateList: IDataQuestions[];
+  stateList: IDataList[];
   Name: string;
 }
 const ListQuestions = (props: Iprops) => {
   const [question, setQuestion] = useState<IDataQuestions[]>([]);
+  const [open, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    setQuestion(
-      props.stateList.sort((a, b) =>
-        a.Priority > b.Priority ? 1 : b.Priority > a.Priority ? -1 : 0
-      )
-    );
+    props.stateList.length &&
+      setQuestion(
+        props.stateList[0].Questions.sort((a, b) =>
+          a.Priority > b.Priority ? 1 : b.Priority > a.Priority ? -1 : 0
+        )
+      );
   }, [props]);
   return (
     <>
-      {console.log(props)}
-      {question.map((eel, index) => (
-        <DivMenu key={index}>
-          <span>{eel.Title}</span>
-          <div>
-            <Up />
-          </div>
-        </DivMenu>
-      ))}
+      {props.stateList.length &&
+        question.map((eel, index) => (
+          <DivMenu key={index}>
+            <span>{eel.Title}</span>
+            <div onClick={() => setOpen(!open)}>
+              {!open ? <Up /> : <Dowun />}
+            </div>
+          </DivMenu>
+        ))}
     </>
   );
 };
