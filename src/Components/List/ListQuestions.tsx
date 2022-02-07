@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { IDataList, IDataQuestions } from "../../@type/type";
 import { Wrapper } from "../Container/style";
-import { DivMenu, Up, Dowun } from "./style";
+import { DivMenu, Up, Dowun, Span, Card } from "./style";
 interface Iprops {
   stateList: IDataList[];
   Name: string;
 }
 const ListQuestions = (props: Iprops) => {
   const [question, setQuestion] = useState<IDataQuestions[]>([]);
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<any>({});
 
+  const toggleHide = (index: any) => {
+    setOpen({ ...open, [index]: !open[index] });
+  };
   useEffect(() => {
     props.stateList.length &&
       setQuestion(
@@ -22,11 +25,16 @@ const ListQuestions = (props: Iprops) => {
     <>
       {props.stateList.length &&
         question.map((eel, index) => (
-          <DivMenu key={index}>
-            <span>{eel.Title}</span>
-            <div onClick={() => setOpen(!open)}>
-              {!open ? <Up /> : <Dowun />}
-            </div>
+          <DivMenu>
+            <Span
+              key={index}
+              onClick={() => toggleHide(index)}
+              open={open[index]}
+            >
+              <span> {eel.Title}</span>
+              <div>{open[index] ? <Up /> : <Dowun />}</div>
+            </Span>
+              {open[index] && <Card>{eel.Body}</Card>}
           </DivMenu>
         ))}
     </>

@@ -35,15 +35,30 @@ export const DataName = styled.div`
 
 export const DivMenu = styled.div`
   display: flex;
+  flex-direction: column;
+`;
+interface IProps {
+  open?: boolean;
+}
+export const Span = styled.div<IProps>`
+  padding: 1rem;
+  width: 80%;
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
+    color: ${(props) => (props.open ? "red" : "black")};
   background-color: #cccccc59;
-  width: 60%;
-  padding: 1rem;
 `;
 
+export const Card = styled.div`
+  padding: 1rem;
+  width: 60%;
+  display: flex;
+  flex-direction: cloumn;
+  background-color: white;
+`;
 export const Up = styled.div`
-border: solid black;
+border: solid #e40e0e;
 border-width: 0 1px 1px 0;
 display: inline-block;
 padding: 3px;
